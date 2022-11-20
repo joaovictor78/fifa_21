@@ -13,11 +13,11 @@ class Themes {
     textSelectionTheme: TextSelectionThemeData(
       cursorColor: ColorPalettes.lightPrimary,
     ),
-    dividerColor: ColorPalettes.darkBG,
+    dividerColor: ColorPalettes.accentPrimary,
     scaffoldBackgroundColor: ColorPalettes.lightBG,
     appBarTheme: AppBarTheme(
       toolbarTextStyle: TextStyle(
-        color: ColorPalettes.darkBG,
+        color: ColorPalettes.white,
         fontSize: 18.0,
         fontWeight: FontWeight.bold,
       ),

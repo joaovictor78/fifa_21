@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 
 class ColorPalettes {
   //Colors for theme
-  static Color lightPrimary = const Color(0xFF3F9798);
-  static Color accentPrimary = const Color(0xFF0F7676);
+  static Color lightPrimary = const Color(0xFF0A3740);
+  static Color accentPrimary = const Color(0xFF258A60);
 
   static Color lightBG = const Color(0xFFFEFEFE);
-  static Color darkBG = const Color(0xff212121);
 
   static Color white = const Color(0xffffffff);
   static Color whiteSemiTransparent = Colors.white70;
