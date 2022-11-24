@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
-import '../interfaces/i_http_client.dart';
+import '../contracts/i_http_client.dart';
 
 class CustomDio implements IHttpClient {
   CustomDio(this._client, String apiUrl) {
     _client.options.baseUrl = apiUrl;
+    _client.options.connectTimeout = 5000;
   }
   final Dio _client;
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
@@ -21,7 +22,8 @@ class _SplashScreenPageState extends State<SplashScreenPage>
 
     _soccerAnimationController =
         AnimationController(vsync: this, duration: const Duration(seconds: 5))
-          ..forward().whenComplete(() => {});
+          ..forward()
+              .whenComplete(() => Modular.to.pushReplacementNamed("/start/"));
     super.initState();
   }
 

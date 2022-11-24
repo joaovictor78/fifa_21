@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../design_system/styles/color_palettes.dart';
@@ -16,12 +17,12 @@ class _StartPageState extends State<StartPage> {
   @override
   void initState() {
     super.initState();
-    Modular.to.navigate('/start/players');
+    Modular.to.navigate('/start/players/list_players');
     Modular.to.addListener(onChangeRoute);
   }
 
   void onChangeRoute() {
-    if (Modular.to.path.contains('players')) {
+    if (Modular.to.path.contains('players/list_players')) {
       selectedPageValueNotifier.value = 0;
     }
 
@@ -65,25 +66,31 @@ class _StartPageState extends State<StartPage> {
                                   padding: const EdgeInsets.all(5),
                                   child: TextButton(
                                     onPressed: () {
-                                      Modular.to.navigate("/start/players");
+                                      Modular.to.navigate(
+                                          "/start/players/list_players");
                                     },
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        Icon(
-                                          Icons.home_rounded,
-                                          size: 35,
+                                        Image.asset(
+                                          'assets/image-icons/player-icon.png',
                                           color: selectedPage == 0
                                               ? ColorPalettes.accentPrimary
-                                              : ColorPalettes.black12,
+                                              : ColorPalettes.accentPrimary
+                                                  .withOpacity(0.6),
+                                          height: 25,
+                                          width: 25,
                                         ),
                                         Text(
                                           "Players",
-                                          style: GoogleFonts.rubik(
+                                          style: GoogleFonts.poppins(
                                               fontWeight: selectedPage == 0
-                                                  ? FontWeight.w800
+                                                  ? FontWeight.w700
                                                   : FontWeight.w400,
-                                              color: Colors.black),
+                                              color: selectedPage == 0
+                                                  ? ColorPalettes.accentPrimary
+                                                  : ColorPalettes.accentPrimary
+                                                      .withOpacity(0.5)),
                                         )
                                       ],
                                     ),
@@ -99,20 +106,26 @@ class _StartPageState extends State<StartPage> {
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        Icon(
-                                          Icons.settings,
-                                          size: 35,
+                                        Image.asset(
+                                          'assets/image-icons/trophy-icon.png',
                                           color: selectedPage == 1
                                               ? ColorPalettes.accentPrimary
-                                              : ColorPalettes.black12,
+                                              : ColorPalettes.accentPrimary
+                                                  .withOpacity(0.6),
+                                          height: 25,
+                                          width: 25,
                                         ),
                                         Text(
                                           "Best Players",
                                           style: GoogleFonts.rubik(
-                                              fontWeight: selectedPage == 1
-                                                  ? FontWeight.w800
-                                                  : FontWeight.w400,
-                                              color: Colors.black),
+                                            fontWeight: selectedPage == 1
+                                                ? FontWeight.w800
+                                                : FontWeight.w400,
+                                            color: selectedPage == 1
+                                                ? ColorPalettes.accentPrimary
+                                                : ColorPalettes.accentPrimary
+                                                    .withOpacity(0.6),
+                                          ),
                                         )
                                       ],
                                     ),
@@ -127,20 +140,25 @@ class _StartPageState extends State<StartPage> {
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        Icon(
-                                          Icons.settings,
-                                          size: 35,
+                                        Image.asset(
+                                          'assets/image-icons/team-soccer-icon.png',
                                           color: selectedPage == 1
                                               ? ColorPalettes.accentPrimary
-                                              : ColorPalettes.black12,
+                                              : ColorPalettes.accentPrimary
+                                                  .withOpacity(0.6),
+                                          height: 25,
+                                          width: 25,
                                         ),
                                         Text(
                                           "Teams",
                                           style: GoogleFonts.rubik(
-                                              fontWeight: selectedPage == 1
+                                              fontWeight: selectedPage == 2
                                                   ? FontWeight.w800
                                                   : FontWeight.w400,
-                                              color: Colors.black),
+                                              color: selectedPage == 2
+                                                  ? ColorPalettes.accentPrimary
+                                                  : ColorPalettes.accentPrimary
+                                                      .withOpacity(0.6)),
                                         )
                                       ],
                                     ),

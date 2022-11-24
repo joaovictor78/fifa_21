@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'general_failures.dart';
 
-class DioFailure extends Failure implements DioError {
+class HttpClientFailures extends Failure implements DioError {
   final String? msg;
   late final int? statusCode;
-  DioFailure(DioError err, {this.msg}) {
+  HttpClientFailures(DioError err, {this.msg}) {
     statusCode = err.response?.statusCode ?? 400;
     type = err.type;
     error = err.error;
