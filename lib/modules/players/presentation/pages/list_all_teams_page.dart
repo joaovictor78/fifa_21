@@ -83,6 +83,24 @@ class _ListAllTeamsPageState extends State<ListAllTeamsPage> {
                           color: ColorPalettes.accentPrimary,
                         );
                       }
+                      if (state.status == FilterTypeItemsStatus.initial) {
+                        return Expanded(
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: ColorPalettes.accentPrimary,
+                            ),
+                          ),
+                        );
+                      }
+                      if (bloc.state.teams?.isEmpty == true) {
+                        return Expanded(
+                          child: Center(
+                              child: Text(
+                            "No player available",
+                            style: GoogleFonts.poppins(color: Colors.white),
+                          )),
+                        );
+                      }
                       return ListView.builder(
                           itemCount: bloc.state.teams?.length == null
                               ? 0
