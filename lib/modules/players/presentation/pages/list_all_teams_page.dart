@@ -96,7 +96,7 @@ class _ListAllTeamsPageState extends State<ListAllTeamsPage> {
                         return Expanded(
                           child: Center(
                               child: Text(
-                            "No player available",
+                            "No teams available",
                             style: GoogleFonts.poppins(color: Colors.white),
                           )),
                         );
