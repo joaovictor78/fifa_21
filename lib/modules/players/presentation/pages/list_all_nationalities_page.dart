@@ -81,8 +81,21 @@ class _ListAllNationalitiesPageState extends State<ListAllNationalitiesPage> {
                     builder:
                         (context, ResultFilterItemsTypeByNationality state) {
                       if (state.status == FilterTypeItemsStatus.initial) {
-                        return CircularProgressIndicator(
-                          color: ColorPalettes.accentPrimary,
+                        return Expanded(
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: ColorPalettes.accentPrimary,
+                            ),
+                          ),
+                        );
+                      }
+                      if (bloc.state.nationalities?.isEmpty == true) {
+                        return Expanded(
+                          child: Center(
+                              child: Text(
+                            "No nationalities available",
+                            style: GoogleFonts.poppins(color: Colors.white),
+                          )),
                         );
                       }
                       return ListView.builder(
