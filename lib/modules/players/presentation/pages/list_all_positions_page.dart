@@ -79,22 +79,18 @@ class _ListAllPositionsPageState extends State<ListAllPositionsPage> {
                     bloc: bloc,
                     builder: (context, ResultFilterItemsTypeByPosition state) {
                       if (state.status == FilterTypeItemsStatus.initial) {
-                        return Expanded(
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              color: ColorPalettes.accentPrimary,
-                            ),
+                        return Center(
+                          child: CircularProgressIndicator(
+                            color: ColorPalettes.accentPrimary,
                           ),
                         );
                       }
                       if (bloc.state.positions?.isEmpty == true) {
-                        return Expanded(
-                          child: Center(
-                              child: Text(
-                            "No positions available",
-                            style: GoogleFonts.poppins(color: Colors.white),
-                          )),
-                        );
+                        return Center(
+                            child: Text(
+                          "No positions available",
+                          style: GoogleFonts.poppins(color: Colors.white),
+                        ));
                       }
                       return ListView.builder(
                           itemCount: bloc.state.positions?.length == null
