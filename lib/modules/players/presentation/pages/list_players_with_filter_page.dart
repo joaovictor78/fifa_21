@@ -26,8 +26,7 @@ class _ListPlayersWithFilterPageState extends State<ListPlayersWithFilterPage> {
   @override
   void initState() {
     bloc = Modular.get<ListPlayersWithFilterBloc>();
-    bloc.add(FetchAllPlayersWithFilter(
-        id: widget.id, page: _page, filterType: widget.type));
+    bloc.add(FetchAllPlayersWithFilter(id: widget.id, filterType: widget.type));
     FocusManager.instance.primaryFocus?.unfocus();
     _scrollController.addListener(_onScroll);
     super.initState();
@@ -76,18 +75,22 @@ class _ListPlayersWithFilterPageState extends State<ListPlayersWithFilterPage> {
                 bloc: bloc,
                 builder: (context, ResultPlayersState state) {
                   if (state.status == PlayersStatus.initial) {
-                    return Center(
-                      child: CircularProgressIndicator(
-                        color: ColorPalettes.accentPrimary,
+                    return Expanded(
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: ColorPalettes.accentPrimary,
+                        ),
                       ),
                     );
                   }
-                  if (bloc.state.players == []) {
-                    return Center(
-                        child: Text(
-                      "No player available",
-                      style: GoogleFonts.poppins(color: Colors.white),
-                    ));
+                  if (bloc.state.players?.isEmpty == true) {
+                    return Expanded(
+                      child: Center(
+                          child: Text(
+                        "No player available",
+                        style: GoogleFonts.poppins(color: Colors.white),
+                      )),
+                    );
                   }
                   return Expanded(
                     child: Padding(
@@ -177,8 +180,7 @@ class _ListPlayersWithFilterPageState extends State<ListPlayersWithFilterPage> {
 
   @override
   void dispose() {
-    Modular.dispose();
-    bloc.state.copyWith();
+    Modular.dispose<ListPlayersWithFilterBloc>();
     _scrollController
       ..removeListener(_onScroll)
       ..dispose();
