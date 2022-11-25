@@ -124,6 +124,7 @@ class _ListAllPositionsPageState extends State<ListAllPositionsPage> {
 
   @override
   void dispose() {
+    Modular.dispose<PositionsBloc>();
     _scrollController
       ..removeListener(_onScroll)
       ..dispose();
