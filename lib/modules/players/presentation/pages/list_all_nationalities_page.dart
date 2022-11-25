@@ -127,6 +127,7 @@ class _ListAllNationalitiesPageState extends State<ListAllNationalitiesPage> {
 
   @override
   void dispose() {
+    Modular.dispose<NationalitiesBloc>();
     _scrollController
       ..removeListener(_onScroll)
       ..dispose();
