@@ -79,8 +79,21 @@ class _ListAllLeaguesPageState extends State<ListAllLeaguesPage> {
                     bloc: bloc,
                     builder: (context, ResultFilterTypeItemsByLeague state) {
                       if (state.status == FilterTypeItemsStatus.initial) {
-                        return CircularProgressIndicator(
-                          color: ColorPalettes.accentPrimary,
+                        return Expanded(
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: ColorPalettes.accentPrimary,
+                            ),
+                          ),
+                        );
+                      }
+                      if (bloc.state.leagues?.isEmpty == true) {
+                        return Expanded(
+                          child: Center(
+                              child: Text(
+                            "No leagues available",
+                            style: GoogleFonts.poppins(color: Colors.white),
+                          )),
                         );
                       }
                       return ListView.builder(
