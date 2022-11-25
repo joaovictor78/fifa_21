@@ -124,6 +124,7 @@ class _ListAllTeamsPageState extends State<ListAllTeamsPage> {
 
   @override
   void dispose() {
+    Modular.dispose<TeamsBloc>();
     _scrollController
       ..removeListener(_onScroll)
       ..dispose();
