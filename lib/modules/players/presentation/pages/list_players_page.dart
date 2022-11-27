@@ -58,12 +58,16 @@ class _ListPlayersPageState extends State<ListPlayersPage> {
               ),
               SearchBarWidget(
                 onChanged: (value) {
+                  _page = 1;
                   if (value.length > 1) {
-                    _page = 1;
                     bloc.add(FetchAllPlayers(
-                        page: 1, playerName: value, isActiveSearch: true));
+                        page: _page, playerName: value, isSearch: true));
                   } else {
-                    bloc.add(FetchAllPlayers(page: 1));
+                    bloc.add(FetchAllPlayers(
+                      page: _page,
+                      playerName: '',
+                      isSearch: true,
+                    ));
                   }
                 },
               ),
@@ -103,10 +107,16 @@ class _ListPlayersPageState extends State<ListPlayersPage> {
                   bloc: bloc,
                   builder: (context, ResultPlayersState state) {
                     if (state.status == PlayersStatus.initial) {
-                      return Center(
-                        child: CircularProgressIndicator(
-                            color: ColorPalettes.accentPrimary),
+                      return Expanded(
+                        child: Center(
+                          child: CircularProgressIndicator(
+                              color: ColorPalettes.accentPrimary),
+                        ),
                       );
+                    }
+                    if (state.players?.isEmpty == true) {
+                      return const Expanded(
+                          child: Center(child: Text('Player not found')));
                     }
                     return Expanded(
                       child: Center(
