@@ -17,26 +17,34 @@ class LeaguesBloc
       FetchFilterTypesItems event, Emitter emit) async {
     if (state.hasReachedMax) return;
     if (state.status == FilterTypeItemsStatus.initial) {
-      final leaguesOrFailure =
-          await leaguesRepository.findAllLeagues(page: event.page);
+      final leaguesOrFailure = await (event.isSearch && event.name.isNotEmpty
+          ? leaguesRepository.findAllLeaguesByName(
+              leagueName: event.name, page: 1)
+          : leaguesRepository.findAllLeagues(page: event.page));
       leaguesOrFailure.fold(
           (l) => emit(state.copyWith(status: FilterTypeItemsStatus.failure)),
           (r) => emit(ResultFilterTypeItemsByLeague(
               status: FilterTypeItemsStatus.success,
               hasReachedMax: false,
               leagues: List.of(state.leagues ?? [])..addAll(r))));
+      return;
     }
-    final leaguesOrFailure =
-        await leaguesRepository.findAllLeagues(page: event.page);
+    final leaguesOrFailure = await (event.isSearch && event.name.isNotEmpty
+        ? leaguesRepository.findAllLeaguesByName(
+            leagueName: event.name, page: 1)
+        : leaguesRepository.findAllLeagues(page: event.page));
 
     leaguesOrFailure.fold(
         (l) => emit(ResultFilterTypeItemsByLeague(
             status: FilterTypeItemsStatus.failure)),
-        (r) => r.isEmpty
+        (r) => !event.isSearch && r.isEmpty
             ? emit(state.copyWith(hasReachedMax: true))
             : emit(state.copyWith(
                 status: FilterTypeItemsStatus.success,
-                leagues: List.of(state.leagues ?? [])..addAll(r),
+                leagues: event.isSearch
+                    ? (List.of([])..addAll(r))
+                    : List.of(state.leagues ?? [])
+                  ..addAll(r),
                 hasReachedMax: false,
               )));
   }
