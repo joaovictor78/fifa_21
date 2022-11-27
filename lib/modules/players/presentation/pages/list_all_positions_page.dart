@@ -19,7 +19,7 @@ class ListAllPositionsPage extends StatefulWidget {
 class _ListAllPositionsPageState extends State<ListAllPositionsPage> {
   late PositionsBloc bloc;
   final _scrollController = ScrollController(initialScrollOffset: 5.0);
-  int _page = 0;
+  int _page = 1;
 
   @override
   void initState() {
@@ -34,98 +34,118 @@ class _ListAllPositionsPageState extends State<ListAllPositionsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorPalettes.lightPrimary,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 20, bottom: 20),
-              child: Row(
-                children: [
-                  InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Icon(
-                        Icons.arrow_back_ios_outlined,
-                        color: Colors.white,
-                      )),
-                  const SizedBox(width: 10),
-                  Text(
-                    'Positions',
-                    style: GoogleFonts.poppins(
-                        fontSize: 18,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400),
-                  )
-                ],
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 20, bottom: 20),
+                child: Row(
+                  children: [
+                    InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Icon(
+                          Icons.arrow_back_ios_outlined,
+                          color: Colors.white,
+                        )),
+                    const SizedBox(width: 10),
+                    Text(
+                      'Positions',
+                      style: GoogleFonts.poppins(
+                          fontSize: 18,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400),
+                    )
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Filter By Positions',
-                style: GoogleFonts.poppins(fontSize: 14, color: Colors.white),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Filter By Positions',
+                  style: GoogleFonts.poppins(fontSize: 14, color: Colors.white),
+                ),
               ),
-            ),
-            SearchBarWidget(
-                hintText: "Search for a team...", onChanged: (value) {}),
-            Expanded(
-                child: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Center(
-                child: BlocBuilder(
-                    bloc: bloc,
-                    builder: (context, ResultFilterItemsTypeByPosition state) {
-                      if (state.status == FilterTypeItemsStatus.initial) {
-                        return Center(
-                          child: CircularProgressIndicator(
-                            color: ColorPalettes.accentPrimary,
-                          ),
-                        );
-                      }
-                      if (bloc.state.positions?.isEmpty == true) {
-                        return Center(
-                            child: Text(
-                          "No positions available",
-                          style: GoogleFonts.poppins(color: Colors.white),
-                        ));
-                      }
-                      return ListView.builder(
-                          itemCount: bloc.state.positions?.length == null
-                              ? 0
-                              : bloc.state.positions!.length - 1,
-                          itemBuilder: ((context, index) {
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
-                              child: ListTile(
-                                onTap: () {
-                                  Modular.to.pushNamed(
-                                      '/players/list_players/positions',
-                                      arguments: {
-                                        'id': state.positions?[index].id ?? 0
-                                      });
-                                },
-                                title: Padding(
-                                  padding: const EdgeInsets.only(left: 8.0),
-                                  child: Text(
-                                    state.positions?[index].name ?? '',
-                                    style: GoogleFonts.poppins(
-                                        color: Colors.white),
+              SearchBarWidget(
+                  hintText: "Search for a team...",
+                  onChanged: (value) {
+                    _page = 1;
+                    if (value.length > 1) {
+                      bloc.add(FetchFilterTypesItems(
+                          page: _page, name: value, isSearch: true));
+                    } else {
+                      bloc.add(FetchFilterTypesItems(
+                        page: _page,
+                        name: '',
+                        isSearch: true,
+                      ));
+                    }
+                  }),
+              Expanded(
+                  child: Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Center(
+                  child: BlocBuilder(
+                      bloc: bloc,
+                      builder:
+                          (context, ResultFilterItemsTypeByPosition state) {
+                        if (state.status == FilterTypeItemsStatus.initial) {
+                          return Center(
+                            child: CircularProgressIndicator(
+                              color: ColorPalettes.accentPrimary,
+                            ),
+                          );
+                        }
+                        if (bloc.state.positions?.isEmpty == true) {
+                          return Center(
+                              child: Text(
+                            "No positions available",
+                            style: GoogleFonts.poppins(color: Colors.white),
+                          ));
+                        }
+                        return ListView.builder(
+                            controller: _scrollController,
+                            itemCount: bloc.state.positions?.length == null
+                                ? 0
+                                : bloc.state.positions!.length - 1,
+                            itemBuilder: ((context, index) {
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8.0),
+                                child: ListTile(
+                                  onTap: () {
+                                    Modular.to.pushNamed(
+                                        '/players/list_players/positions',
+                                        arguments: {
+                                          'id': state.positions?[index].id ?? 0
+                                        });
+                                  },
+                                  title: Padding(
+                                    padding: const EdgeInsets.only(left: 8.0),
+                                    child: Text(
+                                      state.positions?[index].name ?? '',
+                                      style: GoogleFonts.poppins(
+                                          color: Colors.white),
+                                    ),
                                   ),
+                                  tileColor: ColorPalettes.accentPrimary,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10)),
                                 ),
-                                tileColor: ColorPalettes.accentPrimary,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10)),
-                              ),
-                            );
-                          }));
-                    }),
-              ),
-            ))
-          ],
+                              );
+                            }));
+                      }),
+                ),
+              ))
+            ],
+          ),
         ),
       ),
     );
