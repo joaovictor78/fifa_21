@@ -31,7 +31,7 @@ class PositionsRepositoryImpl implements IPositionsRepository {
     try {
       final reponse = await _client.get('/positions-by-name',
           queryParameters: {'page': page, 'position_name': positionName});
-      final positions = (reponse.data['value']['leagues'] as List)
+      final positions = (reponse.data['value']['positions'] as List)
           .map((value) => PositionDTO.fromMap(value))
           .toList();
       return right(positions);
