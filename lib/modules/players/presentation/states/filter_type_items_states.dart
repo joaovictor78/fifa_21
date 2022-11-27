@@ -3,7 +3,7 @@ import '../../domain/entities/nationality_entity.dart';
 import '../../domain/entities/position_entity.dart';
 import '../../domain/entities/team_entity.dart';
 
-enum FilterTypeItemsStatus { initial, success, failure }
+enum FilterTypeItemsStatus { initial, loading, success, failure }
 
 class ResultFilterItemsTypeByNationality {
   final List<NationalityEntity>? nationalities;
