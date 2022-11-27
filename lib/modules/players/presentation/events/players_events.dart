@@ -5,10 +5,9 @@ enum FilterType { league, team, position, nationality }
 class FetchAllPlayers implements ListPlayersEvent {
   final int page;
   final String playerName;
-  final bool isActiveSearch;
+  final bool isSearch;
 
-  FetchAllPlayers(
-      {this.page = 1, this.playerName = "", this.isActiveSearch = false});
+  FetchAllPlayers({this.page = 1, this.playerName = "", this.isSearch = false});
 }
 
 class FetchAllPlayersWithFilter implements ListPlayersEvent {
