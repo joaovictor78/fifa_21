@@ -31,7 +31,7 @@ class NationalitiesRepositoryImpl implements INationalitiesRepository {
     try {
       final reponse = await _client.get('/nationalities-by-name',
           queryParameters: {'page': page, 'nationality_name': nationalityName});
-      final leagues = (reponse.data['value']['leagues'] as List)
+      final leagues = (reponse.data['value']['nationalities'] as List)
           .map((value) => NationalityDTO.fromMap(value))
           .toList();
       return right(leagues);
