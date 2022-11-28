@@ -19,7 +19,7 @@ class ListAllTeamsPage extends StatefulWidget {
 class _ListAllTeamsPageState extends State<ListAllTeamsPage> {
   late TeamsBloc bloc;
   final _scrollController = ScrollController(initialScrollOffset: 5.0);
-  int _page = 0;
+  int _page = 1;
 
   @override
   void initState() {
