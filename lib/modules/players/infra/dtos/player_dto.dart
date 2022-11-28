@@ -4,18 +4,12 @@ import '../../domain/value_objects/weight_vo.dart';
 
 class PlayerDTO {
   static PlayerEntity fromMap(Map<String, dynamic> map) {
-    String sofifaId = map['sofifa_id'].toString();
-    String avatarUrl = sofifaId.length < 5 || sofifaId.length > 6
-        ? ''
-        : sofifaId.length == 5
-            ? "https://cdn.sofifa.com/players/0${sofifaId[0]}${sofifaId[1]}/${sofifaId[2]}${sofifaId[3]}${sofifaId[4]}/21_360.png"
-            : "https://cdn.sofifa.com/players/${sofifaId[0]}${sofifaId[1]}${sofifaId[2]}/${sofifaId[3]}${sofifaId[4]}${sofifaId[5]}/21_360.png";
     return PlayerEntity(
         sofifaId: map['sofifa_id'],
         longName: map['long_name'],
         shortName: map['short_name'],
         playerUrl: map['player_url'],
-        avatarUrl: avatarUrl,
+        avatarUrl: _generateAvatarURL(map['sofifa_id'] ?? 0),
         nationality: map['nationality'],
         age: map['age'],
         heightInMetters: HeightVO.create(map['height_cm'] as int),
@@ -56,5 +50,24 @@ class PlayerDTO {
       "physic": player.physic
     };
     return data;
+  }
+
+  static String _generateAvatarURL(int sofifaID) {
+    String id = sofifaID.toString();
+    List<String> urlFirstParts = List.filled(3, '0', growable: true);
+    List<String> urlSeccondParts = List.filled(3, '0', growable: true);
+    for (int index = 5; index >= 0; index--) {
+      if (index <= id.length - 1) {
+        if (index <= 2) {
+          urlFirstParts[index] = id[index];
+        } else {
+          urlSeccondParts[index - 3] = id[index];
+        }
+      }
+    }
+
+    String formattedUrl =
+        'https://cdn.sofifa.com/players/${urlFirstParts.join()}/${urlSeccondParts.join()}/21_360.png';
+    return formattedUrl;
   }
 }
