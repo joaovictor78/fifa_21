@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
-import 'package:fifa21/core/errors/client_http_failures.dart';
-import 'package:fifa21/modules/players/infra/dtos/player_dto.dart';
+import '../../../../core/errors/client_http_failures.dart';
 import '../../../../core/errors/general_failures.dart';
 import '../../../../core/network/contracts/i_http_client.dart';
 import '../../domain/contracts/players_repository.dart';
 import '../../domain/entities/player_entity.dart';
+import '../dtos/player_dto.dart';
 
 class PlayersRepositoryImpl implements IPlayersRepository {
   final IHttpClient _client;
